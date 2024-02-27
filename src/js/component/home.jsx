@@ -3,12 +3,16 @@ import { ListGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 //create your first component
+
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const [todos, setTodos] = useState([]);
+  const [active, setActive] = useState(null);
   return (
     <div className="container">
-      <h1 className="text-center">Todos</h1>
+      <h1 className="text-center text-black-50" style={{ fontSize: "5rem" }}>
+        Todos
+      </h1>
       <ListGroup>
         <ListGroup.Item className="p-0">
           <input
@@ -27,18 +31,22 @@ const Home = () => {
           />
         </ListGroup.Item>
         {todos.map((item, index) => (
-          <ListGroup.Item className="p-3 d-flex justify-content-between">
+          <ListGroup.Item
+            className="p-3 d-flex justify-content-between"
+            onMouseEnter={() => setActive(index)}
+            onMouseLeave={() => setActive(null)}
+          >
             <p className="m-0 d-flex align-items-center">{item}</p>
             <button
               type="button"
+              className="btn btn-link p-0"
               onClick={() =>
                 setTodos(
                   todos.filter((t, currentIndex) => index !== currentIndex)
                 )
               }
-              class="btn btn-light"
             >
-              <FontAwesomeIcon icon={faX} />
+              {active === index ? <FontAwesomeIcon icon={faX} /> : null}
             </button>
           </ListGroup.Item>
         ))}
